@@ -2,12 +2,20 @@
 
 #include <stdio.h>
 
+#define MAX 1000
+
 int fibonacci(int);
+
+void initMemo();
+
+int memo[MAX];
 
 int main()
 {
 
     int n, fib;
+
+    initMemo();
 
     printf("Which fibonacci number you would like : ");
     scanf("%d", &n);
@@ -25,6 +33,14 @@ int main()
     return 0;
 }
 
+void initMemo()
+{
+    for (int i = 0; i < MAX; i++)
+    {
+        memo[i] = -1;
+    }
+}
+
 int fibonacci(int n)
 {
     if (n == 1)
@@ -37,6 +53,12 @@ int fibonacci(int n)
     }
     else
     {
-        return fibonacci(n - 1) + fibonacci(n - 2);
+        if (memo[n] != -1)
+        {
+            return memo[n];
+        }
+
+        memo[n] = fibonacci(n - 1) + fibonacci(n - 2);
+        return memo[n];
     }
 }
